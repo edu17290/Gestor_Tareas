@@ -18,7 +18,7 @@ class User(Base):
     password = Column(String(255), nullable=False)
 
     tasks = relationship("Task", back_populates="user",
-                         cascade="all, delete-orphan")
+        cascade="all, delete-orphan")
 
 
 class Task(Base):
@@ -30,12 +30,12 @@ class Task(Base):
     due_date = Column(DateTime)
     completed = Column(Boolean, default=False)
     priority = Column(SqlEnum(PriorityEnum), nullable=False,
-                      default=PriorityEnum.media)
+        default=PriorityEnum.media)
     category = Column(String(100))
 
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow,
-                        onupdate=datetime.utcnow)
+        onupdate=datetime.utcnow)
 
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     user = relationship("User", back_populates="tasks")
