@@ -4,9 +4,10 @@ from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import Enum as SqlEnum
-from enums import PriorityEnum
+from models.enums import PriorityEnum
 
 Base = declarative_base()
+
 
 class User(Base):
     __tablename__ = "users"
@@ -16,7 +17,9 @@ class User(Base):
     email = Column(String(255), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
 
-    tasks = relationship("Task", back_populates="user", cascade="all, delete-orphan")
+    tasks = relationship("Task", back_populates="user",
+                         cascade="all, delete-orphan")
+
 
 class Task(Base):
     __tablename__ = "tasks"
@@ -26,11 +29,13 @@ class Task(Base):
     description = Column(String(500))
     due_date = Column(DateTime)
     completed = Column(Boolean, default=False)
-    priority = Column(SqlEnum(PriorityEnum), nullable=False, default=PriorityEnum.media)
+    priority = Column(SqlEnum(PriorityEnum), nullable=False,
+                      default=PriorityEnum.media)
     category = Column(String(100))
 
     created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
 
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     user = relationship("User", back_populates="tasks")
