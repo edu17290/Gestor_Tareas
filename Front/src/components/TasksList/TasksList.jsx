@@ -35,7 +35,7 @@ const TaskList = () => {
         className='btn btn-primary m-2 border rounded-4 fs-5' 
         onClick={handleAddTask}
       > 
-      + Add Task
+      + Nueva Tarea
       </button>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}

@@ -9,4 +9,19 @@ export class TaskService extends BaseService {
     return this.get('tasks');
   }
 
+  getTaskById(taskId) {
+    return this.get(`tasks/${taskId}`);
+  }
+
+  createTask(taskData) {
+    return this.post('tasks', taskData);
+  }
+
+  updateTask(taskId, updatedData) {
+    return this.put(`tasks/${taskId}`, updatedData);
+  }
+
+  deleteTask(taskId) {
+    return this.delete(`tasks/${taskId}`);
+  }
 }

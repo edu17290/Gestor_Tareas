@@ -6,7 +6,7 @@ const DashboardContainer = () => {
     <>
       <div
         className="container mt-2 p-0"
-        style={{ width: "50%" }}
+        style={{ width: "55%" }}
       >
         <Header />
         <TaskList />

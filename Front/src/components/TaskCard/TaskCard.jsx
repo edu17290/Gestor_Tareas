@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { formatDate } from "../../utils/formate_date";
+import { PrivateRoutes } from "../../routes/router";
+import { Link} from "react-router-dom";
 
 const TaskCard = ({ task }) => {
   const [priority, setPriority] = useState("media");
@@ -30,19 +32,27 @@ const TaskCard = ({ task }) => {
             className="fs-4 text-center rounded-4"
             style={
               priority === "alta"
-                ? { background: "#780505", width: "120px" }
+                ? { background: "#780505", width: "120px", color:"white"}
                 : priority === "media"
-                ? { background: "#fe844f", width: "120px" }
-                : { background: "#04c23d", width: "120px" }
+                ? { background: "#fe844f", width: "120px", color:"white" }
+                : { background: "#04c23d", width: "120px", color:"white" }
             }
           >
             {task.priority}
           </p>
 
           <p className="position-absolute top-0 end-0 m-2 fs-5">
-            {formatDate(task.due_date)}
+            Vence: {formatDate(task.due_date)}
           </p>
         </label>
+
+        <Link
+          className="position-absolute bottom-0 end-0 m-2 text-primary cursor-pointer"
+          to={`${PrivateRoutes.TASKDETAILS}/${task.id}`}
+          style={{ fontSize: '16px', fontWeight: 'bold' }}
+        >
+          Ver Detalles
+        </Link>
       </div>
     </>
   );

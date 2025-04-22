@@ -8,6 +8,7 @@ import AuthContextProvider from "./context/AuthProvider";
 import DashboardPage from "./pages/Dashboard.page";
 import AuthGuard from "./guards/auth.guards";
 import NewTaskPage from "./pages/NewTask.page";
+import TaskDetailpage from "./pages/TaskDetail.page";
 
 const LoginPage = lazy(() => import("./pages/Login.page"));
 
@@ -29,6 +30,10 @@ function App() {
               <Route
                 path={PrivateRoutes.NEWTASK}
                 element={<NewTaskPage />}
+              />
+              <Route
+                path={`${PrivateRoutes.TASKDETAILS}/:taskId`}
+                element={<TaskDetailpage />}
               />
               {/* -------------------------------- */}
             </Route>
