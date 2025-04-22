@@ -10,9 +10,10 @@ from db.dependencies import get_db
 
 SECRET_KEY = "ab6fa44a1ab8fa40ab14ed1aa12082b47256c4a13a334ba109abd94db82ac4bd"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 1440
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     """Crear token"""
@@ -20,6 +21,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> User:
     """Obtener usuario desde el token"""

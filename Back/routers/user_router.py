@@ -13,6 +13,7 @@ from models.models import User
 from schemas.users import UserCreate, UserResponse
 from utils.security import hash_password, verify_password
 from schemas.users import PaginatedUsers
+from schemas.users import UserUpdate
 
 user_router = APIRouter(
     prefix="/users",
@@ -46,6 +47,35 @@ def get_users_paginated(
         "users": users
     }
 
+from auth import get_current_user
+
+@user_router.get("/me", response_model=UserResponse)
+def get_current_user_data(current_user: User = Depends(get_current_user)):
+    """
+    Obtener los datos del usuario autenticado.
+    """
+    return current_user
+
+@user_router.put("/me", response_model=UserResponse)
+def update_user_data(
+    user_update: UserUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Actualizar los datos del usuario autenticado.
+    """
+    if user_update.username:
+        current_user.username = user_update.username
+    if user_update.email:
+        current_user.email = user_update.email
+    if user_update.password:
+        current_user.password = hash_password(user_update.password)
+
+    db.commit()
+    db.refresh(current_user)
+    return current_user
+
 @user_router.post("/login", status_code=status.HTTP_200_OK)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     """
@@ -76,7 +106,6 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 @user_router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     """Creacion de uusario"""
-    # Verificar si el email o username ya existe
     existing_user = db.query(User).filter(
         (User.email == user.email) | (User.username == user.username)).first()
     if existing_user:

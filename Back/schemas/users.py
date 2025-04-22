@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from typing import Optional
 from typing import List
 
 
@@ -28,3 +29,8 @@ class PaginatedUsers(BaseModel):
     page_size: int
     total_pages: int
     users: List[UserResponse]
+
+class UserUpdate(BaseModel):
+    username: Optional[str] = None
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None
