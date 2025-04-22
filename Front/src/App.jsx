@@ -7,6 +7,7 @@ import Spinner from "./components/Spinner/Spinner";
 import AuthContextProvider from "./context/AuthProvider";
 import DashboardPage from "./pages/Dashboard.page";
 import AuthGuard from "./guards/auth.guards";
+import NewTaskPage from "./pages/NewTask.page";
 
 const LoginPage = lazy(() => import("./pages/Login.page"));
 
@@ -19,12 +20,17 @@ function App() {
             <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
             <Route element={<AuthGuard privateValidation={true} />}>
               <Route index element={<Navigate to={PrivateRoutes.HOME} />} />
+              {/* AQUI VAN TODAS LAS RUTAS PRIVADAS */}
               <Route
                 path={PrivateRoutes.HOME}
                 index={true}
                 element={<DashboardPage />}
               />
-              {/* AQUI VAN TODAS LAS RUTAS PRIVADAS */}
+              <Route
+                path={PrivateRoutes.NEWTASK}
+                element={<NewTaskPage />}
+              />
+              {/* -------------------------------- */}
             </Route>
           </RoutesNotFound>
         </BrowserRouter>
