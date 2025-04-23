@@ -15,9 +15,9 @@ task_router = APIRouter(
 def get_user_tasks(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     """Obtener las tareas del usuario autenticado"""
     tasks = db.query(Task).filter(Task.user_id == current_user.id).all()
-    if not tasks:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail="No se encontraron tareas")
+    # if not tasks:
+    #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+    #                         detail="No se encontraron tareas")
     return tasks
 
 @task_router.get("/{task_id}", response_model=TaskResponse)
