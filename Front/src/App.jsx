@@ -12,6 +12,7 @@ import TaskDetailpage from "./pages/TaskDetail.page";
 import DashboardLayout from "./components/Dashboard/DashboardLayoyt";
 import CreateUserPage from "./pages/CreateUser.page";
 import LogoutPage from "./pages/Logout.page";
+import UserPage from "./pages/User.page";
 
 const LoginPage = lazy(() => import("./pages/Login.page"));
 
@@ -45,6 +46,10 @@ function App() {
                 <Route
                   path={PrivateRoutes.LOGOUT}
                   element={<LogoutPage />}
+                />
+                <Route
+                  path={PrivateRoutes.USERINFO}
+                  element={<UserPage />}
                 />
               </Route>
               {/* -------------------------------- */}

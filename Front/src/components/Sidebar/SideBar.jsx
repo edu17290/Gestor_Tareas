@@ -91,24 +91,12 @@ const SideBar = () => {
               }}
               className="p-2"
             >
-              <Link to="/login" className="sidebar-link ms-4 text-white" style={{textDecoration:"none"}}>
-                Login
+              <Link to={PrivateRoutes.USERINFO} className="sidebar-link ms-4 text-white" style={{textDecoration:"none"}}>
+                Personal Info
               </Link>
             </li>
 
             <li><hr className="dropdown-divider" /></li>
-
-            <li
-              style={{
-                backgroundColor: "#1e2b4a", 
-                transition: "background-color 0.3s ease", 
-              }}
-              className="p-2"
-            >
-              <Link to="/register" className="sidebar-link ms-4 text-white" style={{textDecoration:"none"}}>
-                Register
-              </Link>
-            </li>
 
             <li><hr className="dropdown-divider" /></li>
 
@@ -131,5 +119,4 @@ const SideBar = () => {
   );
 };
 
-{/* <li><hr className="dropdown-divider" /></li> */}
 export default SideBar;

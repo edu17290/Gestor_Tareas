@@ -53,7 +53,7 @@ const LoginForm = () => {
 
           {fetchError && <div className="text-danger mb-3">{fetchError}</div>}
           <p className="text-center mt-2">
-            <Link to={PublicRutes.NEWUSER}>Si no tienes cuenta Registrate</Link>
+            <Link to={PublicRutes.NEWUSER} style={{color:"#6dd5d5"}}>Si no tienes cuenta Registrate</Link>
           </p>
         </form>
       )}

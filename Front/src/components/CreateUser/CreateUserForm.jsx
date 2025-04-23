@@ -24,61 +24,79 @@ const CreateUserForm = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Crear Usuario</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
-        <div className="mb-3">
-          <label htmlFor="username" className="form-label">Nombre de usuario</label>
-          <input
-            id="username"
-            type="text"
-            className={`form-control ${errors.username ? "is-invalid" : ""}`}
-            {...register("username", { required: "El nombre de usuario es obligatorio." })}
-          />
-          {errors.username && <div className="invalid-feedback">{errors.username.message}</div>}
-        </div>
+    <div
+      style={{
+        backgroundImage: 'url(/assets/bg_glass.png)', 
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center', 
+        backgroundAttachment: 'fixed', 
+        height: '100vh', 
+      }}
+      className="d-flex align-items-center justify-content-center"
+    >
+      <div className="container mt-4 shadow text-white" 
+        style={{ 
+          width: "50%", 
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
+          backdropFilter: "blur(8px)",
+          borderRadius: "12px"
+          }}
+      >
+        <h2>Crear Usuario</h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
+          <div className="mb-3">
+            <label htmlFor="username" className="form-label">Nombre de usuario</label>
+            <input
+              id="username"
+              type="text"
+              className={`form-control ${errors.username ? "is-invalid" : ""}`}
+              {...register("username", { required: "El nombre de usuario es obligatorio." })}
+            />
+            {errors.username && <div className="invalid-feedback">{errors.username.message}</div>}
+          </div>
 
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Correo electrónico</label>
-          <input
-            id="email"
-            type="email"
-            className={`form-control ${errors.email ? "is-invalid" : ""}`}
-            {...register("email", { required: "El correo electrónico es obligatorio." })}
-          />
-          {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
-        </div>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">Correo electrónico</label>
+            <input
+              id="email"
+              type="email"
+              className={`form-control ${errors.email ? "is-invalid" : ""}`}
+              {...register("email", { required: "El correo electrónico es obligatorio." })}
+            />
+            {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
+          </div>
 
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Contraseña</label>
-          <input
-            id="password"
-            type="password"
-            className={`form-control ${errors.password ? "is-invalid" : ""}`}
-            {...register("password", {
-              required: "La contraseña es obligatoria.",
-              minLength: { value: 6, message: "La contraseña debe tener al menos 6 caracteres." }
-            })}
-          />
-          {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
-        </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">Contraseña</label>
+            <input
+              id="password"
+              type="password"
+              className={`form-control ${errors.password ? "is-invalid" : ""}`}
+              {...register("password", {
+                required: "La contraseña es obligatoria.",
+                minLength: { value: 6, message: "La contraseña debe tener al menos 6 caracteres." }
+              })}
+            />
+            {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
+          </div>
 
-        <div className="mb-3">
-          <label htmlFor="confirmPassword" className="form-label">Confirmar contraseña</label>
-          <input
-            id="confirmPassword"
-            type="password"
-            className={`form-control ${errors.confirmPassword ? "is-invalid" : ""}`}
-            {...register("confirmPassword", {
-              required: "Confirmar la contraseña es obligatorio.",
-              validate: (value) => value === watch("password") || "Las contraseñas no coinciden"
-            })}
-          />
-          {errors.confirmPassword && <div className="invalid-feedback">{errors.confirmPassword.message}</div>}
-        </div>
+          <div className="mb-3">
+            <label htmlFor="confirmPassword" className="form-label">Confirmar contraseña</label>
+            <input
+              id="confirmPassword"
+              type="password"
+              className={`form-control ${errors.confirmPassword ? "is-invalid" : ""}`}
+              {...register("confirmPassword", {
+                required: "Confirmar la contraseña es obligatorio.",
+                validate: (value) => value === watch("password") || "Las contraseñas no coinciden"
+              })}
+            />
+            {errors.confirmPassword && <div className="invalid-feedback">{errors.confirmPassword.message}</div>}
+          </div>
 
-        <button type="submit" className="btn btn-primary">Crear cuenta</button>
-      </form>
+          <button type="submit" className="btn btn-primary mb-3">Crear cuenta</button>
+        </form>
+      </div>
     </div>
   );
 };

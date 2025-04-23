@@ -9,5 +9,6 @@ export const PrivateRoutes = {
   NEWTASK: "/add-task",
   TASKDETAILS:"/task-details",
   PROFILE: "/profile",
-  LOGOUT: "/logout"
+  LOGOUT: "/logout",
+  USERINFO: "/personal-information"
 };
