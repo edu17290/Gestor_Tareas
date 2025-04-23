@@ -11,6 +11,7 @@ import NewTaskPage from "./pages/NewTask.page";
 import TaskDetailpage from "./pages/TaskDetail.page";
 import DashboardLayout from "./components/Dashboard/DashboardLayoyt";
 import CreateUserPage from "./pages/CreateUser.page";
+import LogoutPage from "./pages/Logout.page";
 
 const LoginPage = lazy(() => import("./pages/Login.page"));
 
@@ -40,6 +41,10 @@ function App() {
                 <Route
                   path={`${PrivateRoutes.TASKDETAILS}/:taskId`}
                   element={<TaskDetailpage />}
+                />
+                <Route
+                  path={PrivateRoutes.LOGOUT}
+                  element={<LogoutPage />}
                 />
               </Route>
               {/* -------------------------------- */}

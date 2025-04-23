@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { PrivateRoutes } from "../../routes/router";
 import { GrTasks } from "react-icons/gr";
@@ -45,48 +45,91 @@ const SideBar = () => {
         {!isCollapsed && <span className="ms-2 text-white">Task Manager</span>}
       </button>
 
-      
       <ul className="list-unstyled m-0 p-0">
         
         <li className="sidebar-item">
           <Link to={PrivateRoutes.HOME} className="sidebar-link d-flex align-items-center p-3" style={{textDecoration:"none"}}>
-            <FaHome  size={20} color="#8e94f3"/>
+            <FaHome size={20} color="#8e94f3"/>
             {!isCollapsed && <span className="ms-2 text-white">Dashboard</span>}
           </Link>
         </li>
 
         <li className="sidebar-item">
           <Link to={PrivateRoutes.NEWTASK} className="sidebar-link d-flex align-items-center p-3" style={{textDecoration:"none"}}>
-            <GrTasks  size={20} color="#8e94f3"/>
+            <GrTasks size={20} color="#8e94f3"/>
             {!isCollapsed && <span className="ms-2 text-white">New Task</span>}
           </Link>
         </li>
 
-        
         <li className="sidebar-item">
           <div
             className="sidebar-link d-flex align-items-center p-3"
             onClick={toggleAuthDropdown} 
             style={{ cursor: "pointer" }}
           >
-            <FaRegUser  size={20} color="#8e94f3"/>
+            <FaRegUser size={20} color="#8e94f3"/>
             {!isCollapsed && <span className="ms-2 text-white">Profile</span>}
+            {isAuthOpen ? (
+              <FaCaretUp size={20} color="#8e94f3" className="ms-auto"/>
+            ) : (
+              <FaCaretDown size={20} color="#8e94f3" className="ms-auto"/>
+            )}
           </div>
           <ul
             id="authDropdown"
             className={`collapse ms-3 list-unstyled ${isAuthOpen ? "show" : ""}`} 
+            style={{
+              opacity: isAuthOpen ? 1 : 0.8, 
+              transition: "opacity 0.3s ease, box-shadow 0.3s ease", 
+              boxShadow: isAuthOpen ? "0px 4px 8px rgba(0, 0, 0, 0.2)" : "none", 
+            }}
           >
-            <li>
-              <Link to="/login" className="sidebar-link ms-4 text-white" style={{textDecoration:"none"}}>Login</Link>
+            <li
+              style={{
+                backgroundColor: "#1e2b4a", 
+                transition: "background-color 0.3s ease", 
+              }}
+              className="p-2"
+            >
+              <Link to="/login" className="sidebar-link ms-4 text-white" style={{textDecoration:"none"}}>
+                Login
+              </Link>
             </li>
-            <li>
-              <Link to="/register" className="sidebar-link ms-4 text-white" style={{textDecoration:"none"}}>Register</Link>
+
+            <li><hr className="dropdown-divider" /></li>
+
+            <li
+              style={{
+                backgroundColor: "#1e2b4a", 
+                transition: "background-color 0.3s ease", 
+              }}
+              className="p-2"
+            >
+              <Link to="/register" className="sidebar-link ms-4 text-white" style={{textDecoration:"none"}}>
+                Register
+              </Link>
+            </li>
+
+            <li><hr className="dropdown-divider" /></li>
+
+            <li
+              style={{
+                backgroundColor: "#1e2b4a", 
+                transition: "background-color 0.3s ease", 
+              }}
+              className="p-2"
+            >
+              <Link to={PrivateRoutes.LOGOUT} className="sidebar-link ms-4 text-white" style={{textDecoration:"none"}}>
+                Logout
+              </Link>
             </li>
           </ul>
         </li>
       </ul>
+
     </div>
   );
 };
 
+{/* <li><hr className="dropdown-divider" /></li> */}
 export default SideBar;
