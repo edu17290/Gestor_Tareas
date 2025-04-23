@@ -10,6 +10,7 @@ import AuthGuard from "./guards/auth.guards";
 import NewTaskPage from "./pages/NewTask.page";
 import TaskDetailpage from "./pages/TaskDetail.page";
 import DashboardLayout from "./components/Dashboard/DashboardLayoyt";
+import CreateUserPage from "./pages/CreateUser.page";
 
 const LoginPage = lazy(() => import("./pages/Login.page"));
 
@@ -19,7 +20,10 @@ function App() {
       <AuthContextProvider>
         <BrowserRouter>
           <RoutesNotFound>
+            {/* AQUI VAN TODAS LAS RUTAS PUBLICAS */}
             <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
+            <Route path={PublicRutes.NEWUSER} element={<CreateUserPage />} />
+            {/* -------------------------------- */}
             <Route element={<AuthGuard privateValidation={true} />}>
               <Route index element={<Navigate to={PrivateRoutes.HOME} />} />
               <Route element={<DashboardLayout />}>

@@ -1,5 +1,5 @@
-import { Navigate, useNavigate } from "react-router-dom";
-import { PrivateRoutes } from "../../routes/router.js";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { PrivateRoutes, PublicRutes } from "../../routes/router.js";
 import { useContext } from "react";
 import { AuthContext } from "../../context/auth.context.jsx";
 import { useForm } from "react-hook-form";
@@ -52,6 +52,9 @@ const LoginForm = () => {
           </button>
 
           {fetchError && <div className="text-danger mb-3">{fetchError}</div>}
+          <p className="text-center mt-2">
+            <Link to={PublicRutes.NEWUSER}>Si no tienes cuenta Registrate</Link>
+          </p>
         </form>
       )}
     </>

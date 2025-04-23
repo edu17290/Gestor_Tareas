@@ -21,7 +21,13 @@ const TaskList = () => {
 
   useEffect(() => {
     taskService.getAllTasks()
-      .then(data => setTasks(data))
+      .then(data => {
+        if (data && Array.isArray(data) && data.length === 0) {
+          setTasks([]);
+        } else {
+          setTasks(data); 
+        }
+      })
       .catch(err => {
         console.error(err);
         setError('Error al obtener las tareas');
@@ -40,9 +46,13 @@ const TaskList = () => {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      {tasks.map(task => (
-        <TaskCard task={task} key={task.id}/>
-      ))}
+      {tasks.length === 0 ? (
+        <h2 className="text-center mt-4">Crea tu primera tarea!</h2>
+      ) : (
+        tasks.map(task => (
+          <TaskCard task={task} key={task.id} />
+        ))
+      )}
 
     </div>
   );
