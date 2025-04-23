@@ -29,7 +29,7 @@ const TaskCard = ({ task }) => {
         <label className="form-check-label d-flex flex-column fs-5">
           <p className="fs-4 fw-bolder">{task.title}</p>
           <p
-            className="fs-4 text-center rounded-4"
+            className="fs-4 text-center rounded-4 pb-1"
             style={
               priority === "alta"
                 ? { background: "#780505", width: "120px", color:"white"}

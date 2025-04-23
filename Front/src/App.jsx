@@ -9,6 +9,7 @@ import DashboardPage from "./pages/Dashboard.page";
 import AuthGuard from "./guards/auth.guards";
 import NewTaskPage from "./pages/NewTask.page";
 import TaskDetailpage from "./pages/TaskDetail.page";
+import DashboardLayout from "./components/Dashboard/DashboardLayoyt";
 
 const LoginPage = lazy(() => import("./pages/Login.page"));
 
@@ -21,20 +22,22 @@ function App() {
             <Route path={PublicRutes.LOGIN} element={<LoginPage />} />
             <Route element={<AuthGuard privateValidation={true} />}>
               <Route index element={<Navigate to={PrivateRoutes.HOME} />} />
+              <Route element={<DashboardLayout />}>
               {/* AQUI VAN TODAS LAS RUTAS PRIVADAS */}
-              <Route
-                path={PrivateRoutes.HOME}
-                index={true}
-                element={<DashboardPage />}
-              />
-              <Route
-                path={PrivateRoutes.NEWTASK}
-                element={<NewTaskPage />}
-              />
-              <Route
-                path={`${PrivateRoutes.TASKDETAILS}/:taskId`}
-                element={<TaskDetailpage />}
-              />
+                <Route
+                  path={PrivateRoutes.HOME}
+                  index={true}
+                  element={<DashboardPage />}
+                />
+                <Route
+                  path={PrivateRoutes.NEWTASK}
+                  element={<NewTaskPage />}
+                />
+                <Route
+                  path={`${PrivateRoutes.TASKDETAILS}/:taskId`}
+                  element={<TaskDetailpage />}
+                />
+              </Route>
               {/* -------------------------------- */}
             </Route>
           </RoutesNotFound>

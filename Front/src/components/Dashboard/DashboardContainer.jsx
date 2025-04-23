@@ -6,7 +6,7 @@ const DashboardContainer = () => {
     <>
       <div
         className="container mt-2 p-0"
-        style={{ width: "55%" }}
+        style={{ width: "60%" }}
       >
         <Header />
         <TaskList />
@@ -14,4 +14,5 @@ const DashboardContainer = () => {
     </>
   );
 };
+
 export default DashboardContainer;
