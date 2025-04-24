@@ -35,7 +35,7 @@ const TaskList = () => {
   }, []);
 
   return (
-    <div className='border border-dark border-3 border-opacity-25 rounded-bottom-4 container'>
+    <div className='border border-dark border-3 border-opacity-25 rounded-bottom-4 container bg-light'>
 
       <button 
         className='btn btn-primary m-2 border rounded-4 fs-5' 

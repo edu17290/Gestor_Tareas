@@ -27,3 +27,7 @@ body {
   background-color: #f4f4f4;
   line-height: 1.5;
 }
+
+body {
+  overflow-x: hidden;
+}

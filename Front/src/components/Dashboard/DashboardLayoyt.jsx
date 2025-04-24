@@ -4,7 +4,16 @@ import SideBar from "../SideBar/SideBar";
 
 const DashboardLayout = () => {
   return (
-    <div className="container-fluid p-0">
+    <div className="container-fluid p-0"
+      style={{
+        backgroundImage: 'url(/assets/bg_dashboard.jpg)', 
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center', 
+        backgroundAttachment: 'fixed', 
+        minHeight: '100vh',
+        width: "100vw" 
+      }}
+    >
       <div className="row">
         <div
           className="col-3 col-md-2 p-0"

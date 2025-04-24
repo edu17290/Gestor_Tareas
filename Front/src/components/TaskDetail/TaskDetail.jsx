@@ -38,7 +38,7 @@ const TaskDetail = () => {
   return (
     <div className="container mt-4" style={{ width: "50%" }}>
       {task ? (
-        <div className="task-detail border border-secondary-subtle p-4 rounded-3 shadow">
+        <div className="task-detail border border-secondary-subtle p-4 rounded-3 shadow bg-light">
           <h2 className="fs-3 fw-bolder mb-4 text-center">{task.title}</h2>
 
           <div className="mb-3">

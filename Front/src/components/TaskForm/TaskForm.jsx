@@ -24,7 +24,7 @@ const TaskForm = () => {
   };
 
   return (
-    <div className="container mt-5" style={{ width: "50%" }}>
+    <div className="container mt-5 bg-light rounded-3 shadow-lg" style={{ width: "50%" }}>
       <h2>Crear Nueva Tarea</h2>
 
       {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
@@ -93,7 +93,7 @@ const TaskForm = () => {
           {errors.category && <div className="invalid-feedback">{errors.category.message}</div>}
         </div>
 
-        <button type="submit" className="btn btn-primary w-100">Crear tarea</button>
+        <button type="submit" className="btn btn-primary w-100 mb-2">Crear tarea</button>
       </form>
     </div>
   );
