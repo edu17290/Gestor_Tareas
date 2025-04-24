@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { formatDate } from "../../utils/formate_date";  
+import { formatDate, formatDateDetail } from "../../utils/formate_date";  
 import { TaskService } from "../../services/tasks.services";
 import { AuthContext } from "../../context/auth.context";
 
@@ -63,8 +63,13 @@ const TaskDetail = () => {
           </div>
 
           <div className="mb-3">
-            <strong>Fecha de vencimiento:</strong>
-            <p className="fs-5">{formatDate(task.due_date)}</p>
+            <strong className="d-flex">
+              Fecha de vencimiento:
+            </strong>
+            <p className="fs-5 d-flex">
+              {formatDateDetail(task.due_date)}
+              {formatDate(task.due_date) === "Vencida" && <p className="text-danger mx-2 fs-5 mb-0">(Vencida)</p>}
+            </p>
           </div>
 
           {/* <div className="mb-3">
@@ -84,12 +89,12 @@ const TaskDetail = () => {
 
           <div className="mb-3">
             <strong>Fecha de creación:</strong>
-            <p className="fs-5">{formatDate(task.created_at)}</p>
+            <p className="fs-5">{formatDateDetail(task.created_at)}</p>
           </div>
 
           <div className="mb-3">
             <strong>Última actualización:</strong>
-            <p className="fs-5">{formatDate(task.updated_at)}</p>
+            <p className="fs-5">{formatDateDetail(task.updated_at)}</p>
           </div>
         </div>
       ) : (

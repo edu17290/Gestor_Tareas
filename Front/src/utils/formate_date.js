@@ -40,3 +40,16 @@ const isSameDay = (date1, date2) => {
     date1.getMonth() === date2.getMonth() &&
     date1.getFullYear() === date2.getFullYear();
 };
+
+export const formatDateDetail = (dateString) => {
+  const date = new Date(dateString);
+
+  return date.toLocaleString("es-ES", {
+    weekday: "long",  
+    year: "numeric", 
+    month: "long",  
+    day: "numeric",  
+    // hour: "2-digit",  
+    // minute: "2-digit"
+  });
+}
