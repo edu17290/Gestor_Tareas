@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/auth.context';
 import { TaskService } from '../../services/tasks.services';
 import TaskCard from '../TaskCard/TaskCard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { PrivateRoutes } from '../../routes/router';
 
 
@@ -10,6 +10,7 @@ const TaskList = () => {
   const { token } = useContext(AuthContext);
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
+  const { showExpired } = useOutletContext()
 
   const navigate = useNavigate()
 
@@ -25,16 +26,21 @@ const TaskList = () => {
         if (data && Array.isArray(data) && data.length === 0) {
           setTasks([]);
         } else {
-          const filteredTasks = data.filter(task => new Date(task.due_date) >= new Date());
+          const filteredTasks = showExpired
+            ? data.filter(task => new Date(task.due_date) < new Date()) 
+            : data.filter(task => new Date(task.due_date) >= new Date()); 
+
           const sortedTasks = filteredTasks.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
-          setTasks(sortedTasks); 
+
+          setTasks(sortedTasks);
+
         }
       })
       .catch(err => {
         console.error(err);
         setError('Error al obtener las tareas');
       });
-  }, []);
+  }, [showExpired]);
 
   return (
     <div className='border border-dark border-3 border-opacity-25 rounded-bottom-4 container bg-light'>

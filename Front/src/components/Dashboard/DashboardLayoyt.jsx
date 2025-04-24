@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import SideBar from "../Sidebar/SideBar";
 
 const DashboardLayout = () => {
+
+  const [showExpired, setShowExpired] = useState(false)
+
   return (
     <div className="container-fluid p-0"
       style={{
@@ -25,7 +28,7 @@ const DashboardLayout = () => {
             zIndex: 1000         
           }}
         >
-          <SideBar />
+          <SideBar setShowExpired={setShowExpired}/>
         </div>
 
         <div
@@ -34,7 +37,7 @@ const DashboardLayout = () => {
             marginLeft: "10%",    
           }}
         >
-          <Outlet />  
+          <Outlet context={{ showExpired, setShowExpired }}/>  
         </div>
       </div>
     </div>
