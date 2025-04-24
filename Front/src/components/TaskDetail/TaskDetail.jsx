@@ -1,9 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
 import { formatDate, formatDateDetail } from "../../utils/formate_date";  
 import { TaskService } from "../../services/tasks.services";
 import { AuthContext } from "../../context/auth.context";
+import { MdDeleteOutline } from "react-icons/md";
+import { TfiWrite } from "react-icons/tfi";
+import Modal from "../Modal/Modal";
+import { PrivateRoutes } from "../../routes/router";
+
 
 const TaskDetail = () => {
   const { taskId } = useParams(); 
@@ -11,6 +15,8 @@ const TaskDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { token } = useContext(AuthContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate()
 
   const taskService = new TaskService(() => token); 
   
@@ -25,7 +31,27 @@ const TaskDetail = () => {
         setError('Error al cargar la tarea');
         setLoading(false);
       });
-  }, [taskId, taskService]); 
+  }, [taskId]); 
+
+  const deleteTask = () => {
+    taskService
+      .deleteTask(taskId) 
+      .then(() => {
+        navigate(PrivateRoutes.HOME)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    setIsModalOpen(false); 
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   if (loading) {
     return <div>Cargando...</div>;
@@ -96,6 +122,21 @@ const TaskDetail = () => {
             <strong>Última actualización:</strong>
             <p className="fs-5">{formatDateDetail(task.updated_at)}</p>
           </div>
+
+          <div className="icon-container d-flex justify-content-end">
+            <TfiWrite size={25} color="green" className="me-3" style={{cursor:"pointer"}}/>
+            <MdDeleteOutline size={25}
+              color="red"
+              className="me-2"
+              style={{ cursor: "pointer" }}
+              onClick={openModal}/>
+          </div>
+
+          <Modal
+            isOpen={isModalOpen}
+            onClose={closeModal} 
+            onConfirm={deleteTask} 
+          />
         </div>
       ) : (
         <div>No se encontró la tarea.</div>

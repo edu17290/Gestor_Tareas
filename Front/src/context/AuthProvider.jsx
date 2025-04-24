@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { AuthContext } from "./auth.context";
 import AuthService from "../services/auth.services";
 
-const authService = new AuthService(); // ✅ Instancia única
+const authService = new AuthService(); 
 
 const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem("authToken") || null);
