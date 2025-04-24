@@ -9,6 +9,12 @@ export const formatDate = (dateString) => {
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1); 
 
+  today.setHours(0, 0, 0, 0)
+
+  if (date < today) {
+    return "Vencida";
+  }
+
   const formattedDate = date.toLocaleString("es-ES", {
     weekday: "long",  
     year: "numeric", 

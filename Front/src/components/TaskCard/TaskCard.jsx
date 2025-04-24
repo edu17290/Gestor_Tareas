@@ -5,28 +5,17 @@ import { Link} from "react-router-dom";
 
 const TaskCard = ({ task }) => {
   const [priority, setPriority] = useState("media");
-  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     setPriority(task.priority);
   }, [task.priority]);
 
-  const handleCheckboxChange = () => {
-    setChecked(!checked);
-  };
+  const due_date = formatDate(task.due_date)
 
   return (
     <>
       <div className="form-check border border-secondary-subtle m-2 mb-4 rounded-3 position-relative shadow">
-        <input
-          className="form-check-input m-2 border border-primary"
-          type="checkbox"
-          value=""
-          id="checkDefault"
-          checked={checked}
-          onChange={handleCheckboxChange}
-        />
-        <label className="form-check-label d-flex flex-column fs-5">
+        <div className="form-check-label d-flex flex-column fs-5">
           <p className="fs-4 fw-bolder">{task.title}</p>
           <p
             className="fs-4 text-center rounded-4 pb-1"
@@ -42,9 +31,9 @@ const TaskCard = ({ task }) => {
           </p>
 
           <p className="position-absolute top-0 end-0 m-2 fs-5">
-            Vence: {formatDate(task.due_date)}
+            {due_date !== "Vencida" ? `Vence: ${due_date}` : due_date}
           </p>
-        </label>
+        </div>
 
         <Link
           className="position-absolute bottom-0 end-0 m-2 text-primary cursor-pointer"

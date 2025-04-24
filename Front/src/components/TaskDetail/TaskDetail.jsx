@@ -67,7 +67,7 @@ const TaskDetail = () => {
             <p className="fs-5">{formatDate(task.due_date)}</p>
           </div>
 
-          <div className="mb-3">
+          {/* <div className="mb-3">
             <strong>Estado:</strong>
             <p 
             className="fw-bolder fs-5"
@@ -75,7 +75,7 @@ const TaskDetail = () => {
             >
               {task.completed ? "Completada" : "Pendiente"}
             </p>
-          </div>
+          </div> */}
 
           <div className="mb-3">
             <strong>Categoría:</strong>
