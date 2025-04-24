@@ -11,11 +11,11 @@ class TaskBase(BaseModel):
     priority: PriorityEnum
     category: Optional[str] = None
 
-    @field_validator("due_date")
-    def validate_due_date(cls, value):
-        if value and value < datetime.now():
-            raise ValueError("La fecha de vencimiento no puede estar en el pasado.")
-        return value
+    # @field_validator("due_date")
+    # def validate_due_date(cls, value):
+    #     if value and value < datetime.now():
+    #         raise ValueError("La fecha de vencimiento no puede estar en el pasado.")
+    #     return value
 
 class TaskCreate(TaskBase):
     """Campos obligatorios a futuro"""
