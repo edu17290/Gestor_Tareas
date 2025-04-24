@@ -25,7 +25,9 @@ const TaskList = () => {
         if (data && Array.isArray(data) && data.length === 0) {
           setTasks([]);
         } else {
-          setTasks(data); 
+          const filteredTasks = data.filter(task => new Date(task.due_date) >= new Date());
+          const sortedTasks = filteredTasks.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+          setTasks(sortedTasks); 
         }
       })
       .catch(err => {

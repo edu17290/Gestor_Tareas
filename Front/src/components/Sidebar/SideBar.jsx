@@ -55,10 +55,57 @@ const SideBar = () => {
         </li>
 
         <li className="sidebar-item">
-          <Link to={PrivateRoutes.NEWTASK} className="sidebar-link d-flex align-items-center p-3" style={{textDecoration:"none"}}>
+          <div
+            className="sidebar-link d-flex align-items-center p-3"
+            onClick={toggleAuthDropdown} 
+            style={{ cursor: "pointer" }}
+          >
             <GrTasks size={20} color="#8e94f3"/>
-            {!isCollapsed && <span className="ms-2 text-white">New Task</span>}
-          </Link>
+            {!isCollapsed && <span className="ms-2 text-white">Tareas</span>}
+            {isAuthOpen ? (
+              <FaCaretUp size={20} color="#8e94f3" className="ms-auto"/>
+            ) : (
+              <FaCaretDown size={20} color="#8e94f3" className="ms-auto"/>
+            )}
+          </div>
+          
+          <ul
+            id="authDropdown"
+            className={`collapse ms-3 list-unstyled ${isAuthOpen ? "show" : ""}`} 
+            style={{
+              opacity: isAuthOpen ? 1 : 0.8, 
+              transition: "opacity 0.3s ease, box-shadow 0.3s ease", 
+              boxShadow: isAuthOpen ? "0px 4px 8px rgba(0, 0, 0, 0.2)" : "none", 
+            }}
+          >
+            <li
+              style={{
+                backgroundColor: "#1e2b4a", 
+                transition: "background-color 0.3s ease", 
+              }}
+              className="p-2"
+            >
+              <Link to={PrivateRoutes.NEWTASK} className="sidebar-link ms-4 text-white" style={{textDecoration:"none"}}>
+                Crear Tarea
+              </Link>
+            </li>
+
+            <li><hr className="dropdown-divider" /></li>
+
+            <li><hr className="dropdown-divider" /></li>
+
+            <li
+              style={{
+                backgroundColor: "#1e2b4a", 
+                transition: "background-color 0.3s ease", 
+              }}
+              className="p-2"
+            >
+              <Link to={PrivateRoutes.LOGOUT} className="sidebar-link ms-4 text-white" style={{textDecoration:"none"}}>
+                Vencidas
+              </Link>
+            </li>
+          </ul>
         </li>
 
         <li className="sidebar-item">
