@@ -27,10 +27,18 @@ def get_users_paginated(
     db: Session = Depends(get_db)
 ):
     """
-    Obtener usuarios con paginación
+    Obtener usuarios con paginación.
 
     Ejemplo de uso:
         GET /users?page=2&page_size=5
+
+    Args:
+        page (int): Número de la página (por defecto 1).
+        page_size (int): Número de elementos por página (por defecto 10).
+        db (Session): Sesión de base de datos proporcionada por el sistema de dependencias.
+
+    Returns:
+        dict: Un diccionario con el total de usuarios, la página actual, el tamaño de página, el total de páginas y los usuarios de la página solicitada.
     """
     total_users = db.query(User).count()
     total_pages = ceil(total_users / page_size)
@@ -53,6 +61,12 @@ from auth import get_current_user
 def get_current_user_data(current_user: User = Depends(get_current_user)):
     """
     Obtener los datos del usuario autenticado.
+
+    Args:
+        current_user (User): El usuario autenticado, obtenido mediante dependencias.
+
+    Returns:
+        UserResponse: Los datos del usuario autenticado.
     """
     return current_user
 
@@ -64,6 +78,14 @@ def update_user_data(
 ):
     """
     Actualizar los datos del usuario autenticado.
+
+    Args:
+        user_update (UserUpdate): Datos del usuario a actualizar (puede incluir nombre, email y/o contraseña).
+        db (Session): Sesión de base de datos proporcionada por el sistema de dependencias.
+        current_user (User): El usuario autenticado, obtenido mediante dependencias.
+
+    Returns:
+        UserResponse: Los datos actualizados del usuario autenticado.
     """
     if user_update.username:
         current_user.username = user_update.username
@@ -105,7 +127,19 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 
 @user_router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    """Creacion de uusario"""
+    """
+    Crear un nuevo usuario en la aplicación.
+
+    Args:
+        user (UserCreate): Datos del nuevo usuario a crear (username, email, y password).
+        db (Session): Sesión de base de datos proporcionada por el sistema de dependencias.
+
+    Returns:
+        UserResponse: El usuario recién creado.
+
+    Raises:
+        HTTPException: Si el email o el nombre de usuario ya están registrados.
+    """
     existing_user = db.query(User).filter(
         (User.email == user.email) | (User.username == user.username)).first()
     if existing_user:
