@@ -1,143 +1,42 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { formatDate, formatDateDetail } from "../../utils/formate_date";  
 import { TaskService } from "../../services/tasks.services";
 import { AuthContext } from "../../context/auth.context";
-import { MdDeleteOutline } from "react-icons/md";
-import { TfiWrite } from "react-icons/tfi";
-import Modal from "../Modal/Modal";
 import { PrivateRoutes } from "../../routes/router";
-
+import { useTask } from "../../hooks/useTask";
+import TaskDetailInfo from "./TaskDetailInfo";
+import TaskActions from "./TaskActions";
 
 const TaskDetail = () => {
   const { taskId } = useParams(); 
-  const [task, setTask] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const { token } = useContext(AuthContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const taskService = new TaskService(() => token); 
-  
-  useEffect(() => {
-    taskService.getTaskById(taskId)
-      .then(data => {
-        setTask(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setError('Error al cargar la tarea');
-        setLoading(false);
-      });
-  }, [taskId]); 
+  const { task, loading, error } = useTask(taskId, token);
 
-  const deleteTask = () => {
-    taskService
-      .deleteTask(taskId) 
-      .then(() => {
-        navigate(PrivateRoutes.HOME)
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    setIsModalOpen(false); 
-  };
+  const deleteTask = (taskId) => {
+    const taskService = new TaskService(() => token);
+    taskService.deleteTask(taskId)
+      .then(() => navigate(PrivateRoutes.HOME))
+      .catch((err) => console.error(err));
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  if (loading) {
-    return <div>Cargando...</div>;
-  }
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (loading) return <div>Cargando...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="container mt-4" style={{ width: "50%" }}>
       {task ? (
-        <div className="task-detail border border-secondary-subtle p-4 rounded-3 shadow bg-light">
-          <h2 className="fs-3 fw-bolder mb-4 text-center">{task.title}</h2>
-
-          <div className="mb-3">
-            <strong>Descripción:</strong>
-            <p className="fs-5">{task.description || "No hay descripción disponible"}</p>
-          </div>
-
-          <div className="mb-3">
-            <strong>Prioridad:</strong>
-            <p
-              className="fs-5 fw-bolder"
-              style={
-                task.priority === "alta"
-                  ? { width: "120px", color: "#780505" }
-                  : task.priority === "media"
-                  ? { width: "120px", color: "#fe844f" }
-                  : {  width: "120px", color: "#04c23d" }
-              }
-            >
-              {task.priority.charAt(0).toUpperCase() + task.priority.slice(1).toLowerCase()}
-            </p>
-          </div>
-
-          <div className="mb-3">
-            <strong className="d-flex">
-              Fecha de vencimiento:
-            </strong>
-            <p className="fs-5 d-flex">
-              {formatDateDetail(task.due_date)}
-              {formatDate(task.due_date) === "Vencida" && <p className="text-danger mx-2 fs-5 mb-0">(Vencida)</p>}
-            </p>
-          </div>
-
-          {/* <div className="mb-3">
-            <strong>Estado:</strong>
-            <p 
-            className="fw-bolder fs-5"
-            style={task.completed ?{color:"green"}: {color:"red"}}
-            >
-              {task.completed ? "Completada" : "Pendiente"}
-            </p>
-          </div> */}
-
-          <div className="mb-3">
-            <strong>Categoría:</strong>
-            <p className="fs-5">{task.category || "No definida"}</p>
-          </div>
-
-          <div className="mb-3">
-            <strong>Fecha de creación:</strong>
-            <p className="fs-5">{formatDateDetail(task.created_at)}</p>
-          </div>
-
-          <div className="mb-3">
-            <strong>Última actualización:</strong>
-            <p className="fs-5">{formatDateDetail(task.updated_at)}</p>
-          </div>
-
-          <div className="icon-container d-flex justify-content-end">
-            <TfiWrite size={25} color="green" className="me-3" style={{cursor:"pointer"}}/>
-            <MdDeleteOutline size={25}
-              color="red"
-              className="me-2"
-              style={{ cursor: "pointer" }}
-              onClick={openModal}/>
-          </div>
-
-          <Modal
-            isOpen={isModalOpen}
-            onClose={closeModal} 
-            onConfirm={deleteTask} 
-          />
-        </div>
+        <>
+          <TaskDetailInfo task={task} openModal={openModal}/>
+          <TaskActions  taskId={taskId} deleteTask={deleteTask} isModalOpen={isModalOpen} closeModal={closeModal} />
+        </>
       ) : (
         <div>No se encontró la tarea.</div>
       )}
