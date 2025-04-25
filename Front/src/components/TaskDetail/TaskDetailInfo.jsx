@@ -2,7 +2,7 @@ import { formatDate, formatDateDetail } from "../../utils/formate_date";
 import { MdDeleteOutline } from "react-icons/md";
 import { TfiWrite } from "react-icons/tfi";
 
-const TaskDetailInfo = ({ task, openModal  }) => (
+const TaskDetailInfo = ({ task, openModal,toggleEdit  }) => (
   <div className="task-detail border border-secondary-subtle p-4 rounded-3 shadow bg-light">
     <h2 className="fs-3 fw-bolder mb-4 text-center">{task.title}</h2>
 
@@ -42,7 +42,7 @@ const TaskDetailInfo = ({ task, openModal  }) => (
     </div>
 
     <div className="icon-container d-flex justify-content-end">
-      <TfiWrite size={25} color="green" className="me-3" style={{cursor: "pointer"}} />
+      <TfiWrite size={25} color="green" className="me-3" style={{cursor: "pointer"}} onClick={toggleEdit}/>
       <MdDeleteOutline 
         size={25} 
         color="red" 
