@@ -16,3 +16,7 @@ ALGORITHM = os.getenv("ALGORITHM")
 
 # Modo de desarrollo (True o False)
 DEBUG = os.getenv("DEBUG", "false").lower() == "true"
+
+# RAILWAY POSTGRES
+DATABASE_PUBLIC_URL = os.getenv("DATABASE_PUBLIC_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
